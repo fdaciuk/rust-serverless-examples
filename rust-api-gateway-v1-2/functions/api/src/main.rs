@@ -7,9 +7,12 @@ use lambda_http::{
 };
 use serde::Deserialize;
 use serde_json::{json, Value};
+use tracing::{error, info};
+use tracing_subscriber;
 
 #[tokio::main]
 async fn main() -> Result<(), LambdaError> {
+  tracing_subscriber::fmt::init();
   let func = service_fn(handler);
   lambda_http::run(func).await?;
   Ok(())
@@ -19,12 +22,18 @@ async fn handler(request: Request) -> Result<impl IntoResponse, LambdaError> {
   match request.body() {
     Body::Text(value) => match serde_json::from_str::<UserData>(value) {
       Ok(data) => Ok(fn_data(&data)),
-      Err(error) => Ok(json!({
-        "error": true,
-        "message": format!("Deserialization error: {}", error.to_string())
-      })),
+      Err(error) => {
+        error!("ERROR: {}", error.to_string());
+        Ok(json!({
+          "error": true,
+          "message": format!("Deserialization error: {}", error.to_string())
+        }))
+      }
     },
-    _ => Ok(json!({ "error": true, "message": "Unknown error" })),
+    _ => {
+      error!("ERROR: Unknown error");
+      Ok(json!({ "error": true, "message": "Unknown error" }))
+    }
   }
 }
 
@@ -35,6 +44,7 @@ struct UserData {
 }
 
 fn fn_data(data: &UserData) -> Value {
+  info!("INFO: UserData: {:?}", data);
   json!({
     "message": format!("The name is {} {}", data.first_name, data.last_name)
   })

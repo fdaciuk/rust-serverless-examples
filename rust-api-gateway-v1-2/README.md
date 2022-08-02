@@ -60,6 +60,12 @@ Get localstack up and running:
 yarn docker:up:logs
 ```
 
+Use env var `DEBUG=1` to see all logs:
+
+```
+DEBUG=1 yarn docker:up:logs
+```
+
 After that, deploy with the command:
 
 ```
