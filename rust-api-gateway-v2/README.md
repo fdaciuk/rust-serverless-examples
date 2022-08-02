@@ -83,11 +83,10 @@ Don't forget to configure your AWS credentials.
 
 ## Request data from API
 
-To make a request, get the URL given from serverless + the `path` set in 
-`serverless.yml` (`/hello`, in this case) and use curl:
+To make a request, get the URL given from serverless and use curl:
 
 ```
-curl http://<URL>/hello
+curl http://<URL>
 ```
 
 You should see the response:
@@ -99,7 +98,7 @@ Hello Rust!%
 There is a route to test a request with POST method:
 
 ```
-curl -i -X POST http://<URL>/hello/user -H 'Content-Type: application/json' -d '{"first_name": "John", "last_name": "Doe"}'
+curl -i -X POST http://<URL>/user -H 'Content-Type: application/json' -d '{"first_name": "John", "last_name": "Doe"}'
 ```
 
 You sould see the response:
@@ -114,7 +113,7 @@ keys (`first_name` or `last_name` in this case), you will see an error message.
 Try calling without `last_name`, for example:
 
 ```
-curl -i -X POST http://<URL>/hello/user -H 'Content-Type: application/json' -d '{"first_name": "John"}'
+curl -i -X POST http://<URL>/user -H 'Content-Type: application/json' -d '{"first_name": "John"}'
 ```
 
 You should see the response:

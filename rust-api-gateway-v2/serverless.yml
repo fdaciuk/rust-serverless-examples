@@ -6,8 +6,11 @@ provider:
   name: aws
   memorySize: 128
   region: us-east-1
-  apiGateway:
+  httpApi:
+    payload: '2.0'
     shouldStartNameWithService: true
+    metrics: true
+    cors: true
 
   iam:
     role:
@@ -30,18 +33,7 @@ functions:
     tags:
       rust: true
     events:
-      - http:
-          method: post
-          path: hello
-          cors: true
-
-custom:
-  # localstack
-  localstack:
-    stages:
-      - local
-    host: http://0.0.0.0
+      - httpApi: '*'
 
 plugins:
   - sls-rust
-  - serverless-localstack
