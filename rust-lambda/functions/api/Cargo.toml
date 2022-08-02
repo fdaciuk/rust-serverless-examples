@@ -7,3 +7,5 @@ edition = "2021"
 lambda_runtime = "0.6.0"
 serde_json = "1.0.82"
 tokio = { version = "1.20.1", features = ["full"] }
+tracing = "0.1.36"
+tracing-subscriber = "0.3.15"
