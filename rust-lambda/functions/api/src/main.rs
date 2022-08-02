@@ -15,8 +15,5 @@ async fn handler(event: LambdaEvent<Value>) -> Result<Value, LambdaError> {
   let (event, _context) = event.into_parts();
   let first_name = event["firstName"].as_str().unwrap_or("world");
   info!("The first_name is {}", first_name);
-  Ok(json!({
-    "message": format!("Hello, {}", first_name),
-    "loglevel": std::env::var("RUST_LOG").unwrap_or(String::from("sem logs")),
-  }))
+  Ok(json!({ "message": format!("Hello, {}", first_name) }))
 }
