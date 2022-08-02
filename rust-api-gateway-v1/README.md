@@ -58,6 +58,12 @@ Get localstack up and running:
 yarn docker:up:logs
 ```
 
+Use env var `DEBUG=1` to see all logs:
+
+```
+DEBUG=1 yarn docker:up:logs
+```
+
 After that, deploy with the command:
 
 ```
@@ -70,7 +76,7 @@ To make a request, get the URL given from localstack + the `path` set in
 `serverless.yml` (`/hello`, in this case) and use curl:
 
 ```
-curl http://localhost:4566/restapis/SOME_ID/local/_user_request_/hello
+curl -i -X POST http://localhost:4566/restapis/SOME_ID/local/_user_request_/hello
 ```
 
 You should see the response:

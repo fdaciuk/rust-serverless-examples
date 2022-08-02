@@ -5,9 +5,12 @@ use aws_lambda_events::event::apigw::{
 };
 use http::header::HeaderMap;
 use lambda_runtime::{service_fn, Error as LambdaError, LambdaEvent};
+use tracing::info;
+use tracing_subscriber;
 
 #[tokio::main]
 async fn main() -> Result<(), LambdaError> {
+  tracing_subscriber::fmt::init();
   let func = service_fn(handler);
   lambda_runtime::run(func).await?;
   Ok(())
@@ -25,5 +28,7 @@ async fn handler(
     body: Some(Body::Text(format!("Data: {}", data))),
     is_base64_encoded: Some(false),
   };
+
+  info!("Response: {:?}", resp);
   Ok(resp)
 }
