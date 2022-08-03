@@ -46,7 +46,7 @@ cargo build
 
 ## Deploy
 
-To configure localstack locally, put this configuration on your `~.aws/credentials`:
+To configure localstack locally, put this configuration on your `~/.aws/credentials`:
 
 ```
 [default]
