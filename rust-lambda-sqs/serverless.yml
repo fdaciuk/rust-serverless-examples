@@ -1,0 +1,63 @@
+service: rust-lambda
+frameworkVersion: '3'
+configValidationMode: error
+
+provider:
+  name: aws
+  memorySize: 128
+  region: us-east-1
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - lambda:*
+            - sqs:*
+          Resource: '*'
+
+  environment:
+    ENVIRONMENT: ${opt:stage, 'local'}
+
+package:
+  individually: true
+
+functions:
+  rust:
+    handler: functions/api.api
+    runtime: provided.al2
+    tags:
+      rust: true
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - SQSHooks
+              - Arn
+
+resources:
+  Resources:
+    SQSHooks:
+      Type: AWS::SQS::Queue
+      Properties:
+        RedrivePolicy:
+          deadLetterTargetArn: !GetAtt DeadLetterMessagesQueue.Arn
+          maxReceiveCount: 3
+        VisibilityTimeout: 60
+
+    DeadLetterMessagesQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        # Seven days
+        MessageRetentionPeriod: 604800
+
+custom:
+  # localstack
+  localstack:
+    stages:
+      - local
+    host: http://0.0.0.0
+
+plugins:
+  - sls-rust
+  - serverless-localstack
