@@ -10,10 +10,24 @@ use tracing_subscriber;
 
 #[tokio::main]
 async fn main() -> Result<(), LambdaError> {
-  tracing_subscriber::fmt::init();
+  setup_logs();
   let func = service_fn(handler);
   lambda_runtime::run(func).await?;
   Ok(())
+}
+
+fn setup_logs() {
+  match is_local() {
+    true => tracing_subscriber::fmt::init(),
+    false => tracing_subscriber::fmt().with_ansi(false).init(),
+  };
+}
+
+fn is_local() -> bool {
+  match std::env::var("ENVIRONMENT") {
+    Ok(value) => value == "local",
+    Err(_) => false,
+  }
 }
 
 async fn handler(

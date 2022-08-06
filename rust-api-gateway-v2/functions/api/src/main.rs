@@ -14,21 +14,36 @@ use tracing_subscriber;
 
 #[actix_web::main]
 async fn main() -> Result<(), LambdaError> {
-  tracing_subscriber::fmt::init();
+  setup_logs();
   let factory = || App::new().service(hello_handler).service(create_user);
 
   match is_running_on_lambda() {
     true => run_actix_on_lambda(factory).await?,
     false => {
-      info!("Server is running on http://localhost:3000");
+      let port = 3008;
+      info!("Server is running on http://localhost:{}", port);
       HttpServer::new(factory)
-        .bind(("127.0.0.1", 3000))?
+        .bind(("127.0.0.1", port))?
         .run()
         .await?
     }
   };
 
   Ok(())
+}
+
+fn setup_logs() {
+  match is_local() {
+    true => tracing_subscriber::fmt::init(),
+    false => tracing_subscriber::fmt().with_ansi(false).init(),
+  }
+}
+
+fn is_local() -> bool {
+  match std::env::var("ENVIRONMENT") {
+    Ok(value) => value == "local",
+    Err(_) => false,
+  }
 }
 
 fn is_running_on_lambda() -> bool {
