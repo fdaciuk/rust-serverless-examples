@@ -1,0 +1,69 @@
+service: rust-lambda
+frameworkVersion: '3'
+configValidationMode: error
+
+provider:
+  name: aws
+  memorySize: 128
+  region: us-east-1
+  httpApi:
+    payload: '2.0'
+    shouldStartNameWithService: true
+    metrics: true
+    cors: true
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - lambda:*
+            - sqs:*
+          Resource: '*'
+
+  environment:
+    ENVIRONMENT: ${opt:stage, 'local'}
+    SQS_HOOKS_URL: { Ref: SQSHooks }
+
+package:
+  individually: true
+
+functions:
+  rust:
+    handler: functions/api.api
+    runtime: provided.al2
+    tags:
+      rust: true
+    events:
+      - httpApi: '*'
+
+  queueHandler:
+    handler: functions/queue.queue
+    runtime: provided.al2
+    tags:
+      rust: true
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - SQSHooks
+              - Arn
+
+resources:
+  Resources:
+    SQSHooks:
+      Type: AWS::SQS::Queue
+      Properties:
+        RedrivePolicy:
+          deadLetterTargetArn: !GetAtt DeadLetterMessagesQueue.Arn
+          maxReceiveCount: 3
+        VisibilityTimeout: 60
+
+    DeadLetterMessagesQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        # Seven days
+        MessageRetentionPeriod: 604800
+
+plugins:
+  - sls-rust
