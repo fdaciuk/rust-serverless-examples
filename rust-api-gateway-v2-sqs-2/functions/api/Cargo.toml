@@ -1,0 +1,23 @@
+[package]
+name = "api"
+version = "0.1.0"
+edition = "2021"
+
+[package.metadata.commands]
+dev = "bash -c \"source .env && cargo watch -x 'run --bin api'\""
+
+[[bin]]
+name = "queue"
+path = "src/bin/queue.rs"
+
+[dependencies]
+actix-web = "4.1.0"
+aws-config = "0.46.0"
+aws-sdk-sqs = "0.16.0"
+lambda-web = { version = "0.2.0", features = ["actix4"] }
+lambda_runtime = "0.6.0"
+serde = "1.0.140"
+serde_json = "1.0.82"
+tokio = { version = "1.20.1", features = ["full"] }
+tracing = "0.1.36"
+tracing-subscriber = "0.3.15"

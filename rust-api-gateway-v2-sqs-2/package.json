@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "scripts": {
+    "docker:up": "docker-compose up -d",
+    "docker:up:logs": "yarn docker:up && docker-compose logs -f",
+    "docker:down": "docker-compose down --timeout 30",
+    "docker:destroy": "yarn docker:down --volumes --remove-orphans",
+    "deploy:local": "serverless deploy --stage local",
+    "deploy:dev": "serverless deploy --stage dev",
+    "sls:destroy:local": "serverless remove --stage local",
+    "sls:destroy:dev": "serverless remove --stage dev"
+  },
+  "devDependencies": {
+    "serverless": "3.19.0",
+    "serverless-localstack": "1.0.0",
+    "sls-rust": "0.1.1"
+  }
+}

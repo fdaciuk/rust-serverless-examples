@@ -9,6 +9,7 @@ All examples live in their own directories:
 - [rust-api-gateway-v2](/rust-api-gateway-v2): rust in a lambda with api gateway v2 in front of it, using a rest API + local server
 - [rust-lambda-sqs](/rust-lambda-sqs): rust in a lambda awaiting for an sqs event
 - [rust-api-gateway-v2-sqs](/rust-api-gateway-v2-sqs): rust in a lambda with api gateway v2 in front of it sending a message to an sqs queue
+- [rust-api-gateway-v2-sqs-2](/rust-api-gateway-v2-sqs-2): rust in a lambda with api gateway v2 in front of it sending a message to an sqs queue. Two lambdas, but only one Rust project.
 - [rust-api-gateway-v2-graphql (TODO)](/): rust in a lambda with api gateway v2 in front of it, using a graphql API
 
 # License
