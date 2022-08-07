@@ -2538,10 +2538,10 @@ slash@^3.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
-sls-rust@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/sls-rust/-/sls-rust-0.1.1.tgz#626995ad4615dada1a4313095920fd3d08da6686"
-  integrity sha512-VW7m8P4ZVu27zLTvDLnNFLVPUewVpPATYcqQNDzXyaJFZAnXpSIUPd+81ydcQe3S6JP/GvVEy6oCB9dE16DkMA==
+sls-rust@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/sls-rust/-/sls-rust-0.2.0.tgz#534ae5a177069708a68be091492dd273a61cdd73"
+  integrity sha512-xqZTa782vl+OPivCCVpw41zUNh+tM2xalQNFmlH+wkQ2hbWQuzKCfkInB5WOgCdpgSrQ/2GjiUSugzFHMgzUnA==
 
 sort-keys-length@^1.0.0:
   version "1.0.1"

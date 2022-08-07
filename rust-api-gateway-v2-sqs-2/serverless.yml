@@ -66,5 +66,4 @@ resources:
         MessageRetentionPeriod: 604800
 
 plugins:
-  - /media/storage/code/00-opensource/sls-rust
-  # - sls-rust
+  - sls-rust
