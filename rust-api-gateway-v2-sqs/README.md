@@ -64,7 +64,7 @@ source .env && cargo watch -x 'run'
 This command will get the server up and running on `http://localhost:3008`.
 
 To make requests, read the session `Request data from API` below, and use 
-`http://localhost:3000` as `URL`.
+`http://localhost:3008` as `URL`.
 
 ## Deploy
 
